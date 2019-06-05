@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'CustomIcon.dart';
 
@@ -66,47 +67,74 @@ class AnotherPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Hero(
-          tag: "ID$id",
-          child: Container(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              new Image.asset(imagUrl),
-              Material(
-                child: Container(
-                  padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontFamily: 'Raleway',
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(
-                        child: Container(
-                          height: 30.0,
-                          width: 60.0,
-                          alignment: Alignment.centerRight,
-                          margin: EdgeInsets.only(),
-                          child: Image.asset(
-                            imagUrl,
-                            fit: BoxFit.contain,
+        appBar: AppBar(),
+        body: Wrap(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Hero(
+                    tag: "ID$id",
+                    child: Container(
+                        padding: EdgeInsets.only(top: 30.0),
+                        width: 300.0,
+                        height: 300.0,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            new Image.asset(
+                              imagUrl,
+                              fit: BoxFit.cover,
+                            ),
+                          ],
+                        ))),
+                Material(
+                  child: Container(
+                    padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          title,
+                          style: TextStyle(
+                            fontFamily: 'Raleway',
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                      )
-                    ],
+                        SizedBox(
+                          child: Container(
+                            height: 50.0,
+                            width: 50.0,
+                            alignment: Alignment.centerRight,
+                            margin: EdgeInsets.only(),
+                            child: Image.asset(
+                              imagUrl,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
+                  color: Colors.transparent,
                 ),
-                color: Colors.transparent,
-              )
-            ],
-          ))),
-    );
+                Container(
+                 
+                  padding: EdgeInsets.only(left: 20.0, top: 0.0, right:40.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                    width:300.0 ,
+                    height: 120.0,
+                    child: Text(desc , softWrap: true, style: TextStyle(fontSize: 14.0 , fontFamily:"Raleway" ),),
+                  )
+                    ],
+                  )
+                )
+              ],
+            ),
+          ],
+        ));
   }
 }
