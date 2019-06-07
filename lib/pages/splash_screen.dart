@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
         fit: StackFit.expand,
         children: <Widget>[
           Container(
-            decoration: BoxDecoration(color: Colors.redAccent),
+            decoration: BoxDecoration(color: Colors.white70),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -35,22 +35,21 @@ class _SplashScreenState extends State<SplashScreen> {
                     children: <Widget>[
                       CircleAvatar(
                         backgroundColor: Colors.red,
-                        radius: 50.0,
-                        child: Icon(
-                          Icons.shopping_cart,
-                          color: Colors.greenAccent,
-                          size: 50.0,
-                        ),
+                        radius: 80.0,
+                        child: Image.asset("assets/logo.png" , fit:BoxFit.cover,),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 10.0),
+                        padding: EdgeInsets.only(top: 50.0),
                       ),
                       Text(
-                        "Flutkart.name",
+                        "PUMA",
                         style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.grey,
                             fontWeight: FontWeight.bold,
-                            fontSize: 24.0),
+                            fontSize: 30.0,
+                            fontFamily: 'Raleway'
+                            
+                            ),
                       )
                     ],
                   ),
@@ -63,16 +62,18 @@ class _SplashScreenState extends State<SplashScreen> {
                   children: <Widget>[
                     CircularProgressIndicator(),
                     Padding(
-                      padding: EdgeInsets.only(top: 20.0),
+                      padding: EdgeInsets.only(top: 50.0),
                     ),
                     Text(
-                      "Flutkart.store",
+                      "PUMA.com | Forever Faster.",
                       softWrap: true,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0,
-                          color: Colors.white),
+                          color: Colors.blueGrey,
+                          fontFamily: 'Helvetica'
+                        ),
                     )
                   ],
                 ),
