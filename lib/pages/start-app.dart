@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'ProductCard.dart';
-import 'CustomIcon.dart';
+import '../widget/ProductCard.dart';
+import '../widget/CustomIcon.dart';
 
 
 

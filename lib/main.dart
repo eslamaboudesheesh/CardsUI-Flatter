@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'start-app.dart';
-import 'splash_screen.dart';
+import './pages/start-app.dart';
+import './pages/splash_screen.dart';
 
 var routes = <String, WidgetBuilder>{
   "/home": (BuildContext context) => MyApp(),
