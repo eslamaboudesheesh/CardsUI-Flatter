@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'CustomIcon.dart';
+import 'package:advanced_share/advanced_share.dart';
 
 class ProductCard extends StatelessWidget {
   int cardColor;
@@ -64,6 +65,26 @@ class AnotherPage extends StatelessWidget {
   const AnotherPage({Key key, this.imagUrl, this.title, this.id, this.desc})
       : super(key: key);
 
+
+void handleResponse(response, {String appName}) {
+    if (response == 0) {
+      print("failed.");
+    } else if (response == 1) {
+      print("success");
+    } else if (response == 2) {
+      print("application isn't installed");
+    
+    }
+  }
+
+  void gmail() {
+    AdvancedShare
+        .gmail(subject: "Advanced Share", msg: "Mail body", url: this.imagUrl)
+        .then((response) {
+      handleResponse(response, appName: "Gmail");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,16 +96,16 @@ class AnotherPage extends StatelessWidget {
                 Hero(
                     tag: "ID$id",
                     child: Container(
-                        padding: EdgeInsets.only(top: 30.0),
-                        width: 300.0,
-                        height: 300.0,
-                        child: Column(
+                       height: 280,
+                        child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            new Image.asset(
+                            Expanded(child:  new Image.asset(
                               imagUrl,
-                              fit: BoxFit.cover,
-                            ),
+                              fit: BoxFit.contain,
+                              width: MediaQuery.of(context).size.width,
+                            ),)
+                           
                           ],
                         ))),
                 Material(
@@ -131,7 +152,25 @@ class AnotherPage extends StatelessWidget {
                   )
                     ],
                   )
-                )
+                ),
+
+                Container(alignment: Alignment.bottomCenter,
+                margin: EdgeInsets.only(top: 80.0),
+                child: InkWell(
+                  onTap: (){},
+                  child:FlatButton.icon(
+          color: Colors.white,
+          icon: Icon(Icons.share),
+          label: Text('Share element'), 
+          onPressed: () {
+
+            gmail();
+          }
+        ),
+                ),
+                
+                 ),
+                 
               ],
             ),
           ],
