@@ -11,6 +11,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
   AnimationController _controller;
   Animation<Offset> _offsetFloat;
+ Animation<Offset> _headerOffsetFloat;
+
 
   @override
   void initState() {
@@ -23,7 +25,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         setState(() {});
       });
     _controller.forward();
-
+ _headerOffsetFloat =
+        Tween<Offset>(begin: Offset(0.0, 2.0), end: Offset.zero)
+            .animate(_controller);
     _offsetFloat = Tween<Offset>(begin: Offset(0.0, 5.0), end: Offset.zero)
         .animate(_controller);
   }
@@ -64,10 +68,13 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
             children: <Widget>[
               Align(
                 alignment: Alignment.center,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 30.0, bottom: 25.0),
-                  child:
-                      Image.asset("assets/logo.png", width: 62.0, height: 43.0),
+                child: SlideTransition(
+                  position: _headerOffsetFloat,
+                                  child: Padding(
+                    padding: EdgeInsets.only(top: 30.0, bottom: 25.0),
+                    child:
+                        Image.asset("assets/logo.png", width: 62.0, height: 43.0),
+                  ),
                 ),
               ),
               SlideTransition(
