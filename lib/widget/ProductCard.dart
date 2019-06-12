@@ -1,7 +1,7 @@
+import 'package:advanced_share/advanced_share.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'CustomIcon.dart';
-import 'package:advanced_share/advanced_share.dart';
 
 class ProductCard extends StatelessWidget {
   int cardColor;
@@ -64,22 +64,23 @@ class AnotherPage extends StatelessWidget {
   final String desc;
   const AnotherPage({Key key, this.imagUrl, this.title, this.id, this.desc})
       : super(key: key);
-
-
-void handleResponse(response, {String appName}) {
+  void handleResponse(response, {String appName}) {
     if (response == 0) {
       print("failed.");
     } else if (response == 1) {
       print("success");
     } else if (response == 2) {
       print("application isn't installed");
-    
+      if (appName != null) {
+            print("application isn't null");
+
+      }
     }
   }
 
-  void gmail() {
+   void gmail() {
     AdvancedShare
-        .gmail(subject: "Advanced Share", msg: "Mail body", url: this.imagUrl)
+        .gmail(subject: "Advanced Share", msg: "Mail body")
         .then((response) {
       handleResponse(response, appName: "Gmail");
     });
@@ -157,14 +158,15 @@ void handleResponse(response, {String appName}) {
                 Container(alignment: Alignment.bottomCenter,
                 margin: EdgeInsets.only(top: 80.0),
                 child: InkWell(
-                  onTap: (){},
+                  onTap: (){
+                    
+                  },
                   child:FlatButton.icon(
           color: Colors.white,
           icon: Icon(Icons.share),
           label: Text('Share element'), 
           onPressed: () {
-
-            gmail();
+               gmail();
           }
         ),
                 ),

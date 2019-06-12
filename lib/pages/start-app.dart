@@ -2,17 +2,38 @@ import 'package:flutter/material.dart';
 import '../widget/ProductCard.dart';
 import '../widget/CustomIcon.dart';
 
-
-
-
-
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => new _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
+  AnimationController _controller;
+  Animation<Offset> _offsetFloat;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1000),
+    )..addListener(() {
+        setState(() {});
+      });
+    _controller.forward();
+
+    _offsetFloat = Tween<Offset>(begin: Offset(0.0, 5.0), end: Offset.zero)
+        .animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+
+    super.dispose();
+  }
 
   List<Widget> bottomNavIconList = [
     Image.asset(
@@ -49,13 +70,31 @@ class _MyAppState extends State<MyApp> {
                       Image.asset("assets/logo.png", width: 62.0, height: 43.0),
                 ),
               ),
-              ProductCard(0xFFfaecfb, "assets/shoes_01.png",
-                  "Hybrid Rocket WNS", "\$999.00", "\$749" , "12" ,"For help getting started with Flutter, view our online documentation, which offers tutorials, samples, guidance on mobile development, and a full API reference"),
+              SlideTransition(
+                position: _offsetFloat,
+                child: ProductCard(
+                    0xFFfaecfb,
+                    "assets/shoes_01.png",
+                    "Hybrid Rocket WNS",
+                    "\$999.00",
+                    "\$749",
+                    "12",
+                    "For help getting started with Flutter, view our online documentation, which offers tutorials, samples, guidance on mobile development, and a full API reference"),
+              ),
               SizedBox(
                 height: 32.0,
               ),
-              ProductCard(0xFFf8e1da, "assets/shoes_02.png",
-                  "Hybrid Runner ARS", "\$699", "\$599" , "13" , "For help getting started with Flutter, view our online documentation, which offers tutorials, samples, guidance on mobile development, and a full API reference")
+              SlideTransition(
+                position: _offsetFloat,
+                child: ProductCard(
+                    0xFFf8e1da,
+                    "assets/shoes_02.png",
+                    "Hybrid Runner ARS",
+                    "\$699",
+                    "\$599",
+                    "13",
+                    "For help getting started with Flutter, view our online documentation, which offers tutorials, samples, guidance on mobile development, and a full API reference"),
+              )
             ],
           ),
         ),
