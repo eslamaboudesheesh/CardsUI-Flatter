@@ -1,7 +1,7 @@
-import 'package:advanced_share/advanced_share.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'CustomIcon.dart';
+import 'package:share/share.dart';
 
 class ProductCard extends StatelessWidget {
   int cardColor;
@@ -78,13 +78,7 @@ class AnotherPage extends StatelessWidget {
     }
   }
 
-   void gmail() {
-    AdvancedShare
-        .gmail(subject: "Advanced Share", msg: "Mail body")
-        .then((response) {
-      handleResponse(response, appName: "Gmail");
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -159,14 +153,15 @@ class AnotherPage extends StatelessWidget {
                 margin: EdgeInsets.only(top: 80.0),
                 child: InkWell(
                   onTap: (){
-                    
+
                   },
                   child:FlatButton.icon(
           color: Colors.white,
           icon: Icon(Icons.share),
           label: Text('Share element'), 
           onPressed: () {
-               gmail();
+                                  Share.share('check out my website https://example.com');
+
           }
         ),
                 ),
