@@ -12,4 +12,10 @@ void main() => runApp(new MaterialApp(
 
     debugShowCheckedModeBanner: false,
     home: SplashScreen(),
-    routes: routes));
+    
+    routes: routes
+  
+    
+    ));
+
+
