@@ -72,13 +72,10 @@ class AnotherPage extends StatelessWidget {
     } else if (response == 2) {
       print("application isn't installed");
       if (appName != null) {
-            print("application isn't null");
-
+        print("application isn't null");
       }
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -91,16 +88,17 @@ class AnotherPage extends StatelessWidget {
                 Hero(
                     tag: "ID$id",
                     child: Container(
-                       height: 280,
+                        height: 280,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Expanded(child:  new Image.asset(
-                              imagUrl,
-                              fit: BoxFit.contain,
-                              width: MediaQuery.of(context).size.width,
-                            ),)
-                           
+                            Expanded(
+                              child: new Image.asset(
+                                imagUrl,
+                                fit: BoxFit.contain,
+                                width: MediaQuery.of(context).size.width,
+                              ),
+                            )
                           ],
                         ))),
                 Material(
@@ -135,39 +133,37 @@ class AnotherPage extends StatelessWidget {
                   color: Colors.transparent,
                 ),
                 Container(
-                 
-                  padding: EdgeInsets.only(left: 20.0, top: 0.0, right:40.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(
-                    width:300.0 ,
-                    height: 120.0,
-                    child: Text(desc , softWrap: true, style: TextStyle(fontSize: 14.0 , fontFamily:"Raleway" ),),
-                  )
-                    ],
-                  )
+                    padding: EdgeInsets.only(left: 20.0, top: 0.0, right: 40.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 300.0,
+                          height: 120.0,
+                          child: Text(
+                            desc,
+                            softWrap: true,
+                            style: TextStyle(
+                                fontSize: 14.0, fontFamily: "Raleway"),
+                          ),
+                        )
+                      ],
+                    )),
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  margin: EdgeInsets.only(top: 80.0),
+                  child: InkWell(
+                    onTap: () {},
+                    child: FlatButton.icon(
+                        color: Colors.white,
+                        icon: Icon(Icons.share),
+                        label: Text('Share element'),
+                        onPressed: () {
+                          Share.share(
+                              'check out my website https://example.com');
+                        }),
+                  ),
                 ),
-
-                Container(alignment: Alignment.bottomCenter,
-                margin: EdgeInsets.only(top: 80.0),
-                child: InkWell(
-                  onTap: (){
-
-                  },
-                  child:FlatButton.icon(
-          color: Colors.white,
-          icon: Icon(Icons.share),
-          label: Text('Share element'), 
-          onPressed: () {
-                                  Share.share('check out my website https://example.com');
-
-          }
-        ),
-                ),
-                
-                 ),
-                 
               ],
             ),
           ],

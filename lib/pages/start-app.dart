@@ -60,6 +60,24 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+backgroundColor: Colors.black,
+elevation: 0.0,
+      ),
+           drawer: Drawer(
+          child: ListView(
+    children: <Widget>[
+      ListTile(
+        title: Text("Ttem 1"),
+        trailing: Icon(Icons.arrow_forward),
+      ),
+      ListTile(
+        title: Text("Item 2"),
+        trailing: Icon(Icons.arrow_forward),
+      ),
+    ],
+  ),
+        ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
