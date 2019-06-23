@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:startagain/pages/splash_screen.dart';
-import '../widget/ProductCard.dart';
+import 'package:flutter/widgets.dart';
 import '../widget/CustomIcon.dart';
 import 'homepage.dart';
 
@@ -10,7 +9,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
-
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -36,10 +34,6 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     ),
   ];
 
-
-
-
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -60,14 +54,70 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
           elevation: 6.0,
           child: ListView(
             children: <Widget>[
-              ListTile(
-                title: Text("Ttem 1"),
-                trailing: Icon(Icons.arrow_forward),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(color: Color(0xffEEEEEE)),
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "fullName",
+                                  softWrap: false,
+                                  style: TextStyle(
+                                      color: Colors.black87, fontSize: 15.0),
+                                  maxLines: 1,
+                                ),
+                                Container(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "View Profile",
+                                  style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      color: Colors.black87,
+                                      fontSize: 10.0),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              // border color
+                              border: Border.all(
+                                  width: 5, color: Color(0xFFFAFAFA)),
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: ExactAssetImage('assets/profile.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )),
+      Padding(padding: EdgeInsets.only(top: 30.0 , left: 20.0 , right: 20.0),
+       child: Column(children: <Widget>[
+             ListTile(
+                title: Text("Location" ,style: TextStyle(fontSize: 13.0 ,fontWeight: FontWeight.w600 ),),
+                trailing: Icon(Icons.location_on ),
               ),
-              ListTile(
-                title: Text("Item 2"),
-                trailing: Icon(Icons.arrow_forward),
-              ),
+              Divider(color: Colors.grey, height: 0.0,),
+             
+       ],),
+      )              
+              
             ],
           ),
         ),
@@ -117,9 +167,10 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
           currentIndex: _selectedIndex,
           selectedFontSize: 5.0,
           elevation: 5.0,
-          backgroundColor:  Colors.red,
+          backgroundColor: Colors.red,
           onTap: _onItemTapped,
         ));
   }
 }
+
 
