@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:startagain/pages/service_locator.dart';
 import '../widget/CustomIcon.dart';
 import 'homepage.dart';
 
@@ -16,14 +17,10 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     Container(
       child: Homepage(),
     ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
+    Container(
+      child:Text("data"),
     ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    Container( ),
     Text(
       'Index 3: School',
       style: optionStyle,

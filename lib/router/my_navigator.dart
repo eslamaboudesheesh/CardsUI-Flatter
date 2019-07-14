@@ -5,7 +5,11 @@ class MyNavigator {
     Navigator.pushNamed(context, "/home");
   }
 
-  // static void goToIntro(BuildContext context) {
-  //   Navigator.pushNamed(context, "/intro");
-  // }
+  static void goToAuth(BuildContext context) {
+    Navigator.pushReplacementNamed(context, "/Myauthenticate");
+  }
+
+  static void goToAuthFaild(BuildContext context) {
+    Navigator.pushNamed(context, "/faild");
+  }
 }

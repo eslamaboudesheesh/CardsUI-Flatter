@@ -24,13 +24,16 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   share: ^0.6.1+1
-
+  equatable: ^0.2.0
+  flutter_bloc: ^0.14.0
+  local_auth: ^0.5.2+3
+  get_it: ^1.0.3+2
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
