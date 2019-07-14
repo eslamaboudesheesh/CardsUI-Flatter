@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:startagain/pages/service_locator.dart';
+import 'package:startagain/router/my_navigator.dart';
 import '../widget/CustomIcon.dart';
 import 'homepage.dart';
 
@@ -106,10 +107,15 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                   )),
       Padding(padding: EdgeInsets.only(top: 30.0 , left: 20.0 , right: 20.0),
        child: Column(children: <Widget>[
-             ListTile(
-                title: Text("Location" ,style: TextStyle(fontSize: 13.0 ,fontWeight: FontWeight.w600 ),),
-                trailing: Icon(Icons.location_on ),
-              ),
+             InkWell(
+               onTap: (){
+                 MyNavigator.goToLocation(context);
+               },
+                            child: ListTile(
+                  title: Text("Location" ,style: TextStyle(fontSize: 13.0 ,fontWeight: FontWeight.w600 ),),
+                  trailing: Icon(Icons.location_on ),
+                ),
+             ),
               Divider(color: Colors.grey, height: 0.0,),
              
        ],),

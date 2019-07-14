@@ -28,6 +28,8 @@ dependencies:
   flutter_bloc: ^0.14.0
   local_auth: ^0.5.2+3
   get_it: ^1.0.3+2
+  sliding_up_panel: ^0.3.4
+  google_maps_flutter: ^0.5.16
   
 
 dev_dependencies:

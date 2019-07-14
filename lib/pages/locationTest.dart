@@ -1,155 +1,190 @@
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:url_launcher/url_launcher.dart';
-// import 'package:valu/bloc/locations/locations_bloc.dart';
-// import 'package:valu/bloc/locations/locations_event.dart';
-// import 'package:valu/bloc/locations/locations_state.dart';
-// import 'dart:async';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-// import 'package:valu/models/valu_models/navigation_arguments.dart';
-// import 'package:valu/repositories/repositories.dart';
-// import 'package:valu/widgets/navigation/valu_app_bar_widget.dart';
 
-// class LocationsPage extends StatefulWidget {
-//   static const routeName = '/Locations';
+import 'dart:async';
 
-//   final ValuRepository valuRepository;
 
-//   LocationsPage({Key key, @required this.valuRepository})
-//       : assert(valuRepository != null),
-//         super(key: key);
+class LocationsPage extends StatefulWidget {
+  static const routeName = '/Locations';
 
-//   @override
-//   State<LocationsPage> createState() => _LocationsPageState();
-// }
 
-// class _LocationsPageState extends State<LocationsPage> {
-//   List<Marker> allMarkers = [];
 
-//   LocationsBloc _locationsBloc;
-//   GoogleMapController myMapController;
-//   static const LatLng _mainLocation = const LatLng(26.8206, 30.8025);
-//   Completer<GoogleMapController> _controller = Completer();
 
-//   LatLngBounds getLatLngBoundsForMarkers(List<Marker> markers) {
-//     var northEast =
-//         new LatLng(markers[0].position.latitude, markers[0].position.longitude);
-//     var southWest =
-//         new LatLng(markers[0].position.latitude, markers[0].position.longitude);
 
-//     markers.forEach((marker) {
-//       if (marker.position.latitude > northEast.latitude) {
-//         northEast = LatLng(marker.position.latitude, northEast.longitude);
-//       }
-//       if (marker.position.longitude > northEast.longitude) {
-//         northEast = LatLng(northEast.latitude, marker.position.longitude);
-//       }
+  @override
+  State<LocationsPage> createState() => _LocationsPageState();
+}
 
-//       if (marker.position.latitude < southWest.latitude) {
-//         southWest = LatLng(marker.position.latitude, southWest.longitude);
-//       }
-//       if (marker.position.longitude < southWest.longitude) {
-//         southWest = LatLng(southWest.latitude, marker.position.longitude);
-//       }
-//     });
+class _LocationsPageState extends State<LocationsPage> {
+  List<Marker> allMarkers = [];
 
-//     return LatLngBounds(northeast: northEast, southwest: southWest);
-//   }
+  String noBrancheList;
 
-//   @override
-//   void initState() {
-//     super.initState();
-//     _locationsBloc = LocationsBloc(valuRepository: widget.valuRepository);
-//     _locationsBloc.dispatch(SubmitLocations());
-//   }
+  bool loading = false;
 
-//   void check(CameraUpdate u, GoogleMapController c) async {
-//     c.animateCamera(u);
-//     myMapController.animateCamera(u);
-//     LatLngBounds l1 = await c.getVisibleRegion();
-//     LatLngBounds l2 = await c.getVisibleRegion();
-//     print(l1.toString());
-//     print(l2.toString());
-//     if (l1.southwest.latitude == -90 || l2.southwest.latitude == -90)
-//       check(u, c);
-//   }
+  GoogleMapController myMapController;
+  static const LatLng _mainLocation = const LatLng(26.8206, 30.8025);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: ValuAppBarWidget(
-//             showLogo: false,
-//             barTitle: "Locations",
-//             showSideMenu: false,
-//             showBackButton: true,
-//             drawerToggle: () => Navigator.of(context).pop()).build(context),
-//         body: BlocBuilder(
-//           bloc: _locationsBloc,
-//           builder: (BuildContext context, LocationsState state) {
-//             if (state is IntializeLocationsState ||
-//                 state is LoadingLocationsState) {
-//               return Center(
-//                 child: CircularProgressIndicator(),
-//               );
-//             } else if (state is SuccessLocationsState) {
-//               var markersList = state.response.boothList.map((booth) {
-//                 return Marker(
-//                   markerId: MarkerId(booth.id.toString()),
-//                   draggable: true,
-//                   onTap: () async {
-//                     var locationURL =
-//                         "http://maps.google.com/maps?q=loc:${booth.latitude},${booth.longitude}";
-//                     if (await canLaunch(locationURL)) {
-//                       await launch(locationURL);
-//                     }
-//                   },
-//                   position: LatLng(double.parse(booth.latitude),
-//                       double.parse(booth.longitude)),
-//                   flat: false,
-//                   anchor: Offset(0.5, 0.5),
-//                   icon: BitmapDescriptor.fromAsset(
-//                       'resources/images/ic_booth_marker.png'),
-//                 );
-//               }).toList();
-//               return Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: <Widget>[
-//                   Expanded(
-//                     child: GoogleMap(
-//                       initialCameraPosition: CameraPosition(
-//                         target: _mainLocation,
-//                         zoom: 7.0,
-//                       ),
-//                       mapType: MapType.normal,
-//                       onMapCreated: (controller) {
-//                         setState(() {
-//                           myMapController = controller;
-//                         });
-//                         new Future.delayed(Duration(milliseconds: 500), () {
-//                           var latlngBounds =
-//                               getLatLngBoundsForMarkers(markersList);
-//                           CameraUpdate u2 =
-//                               CameraUpdate.newLatLngBounds(latlngBounds, 50);
-//                           myMapController.animateCamera(u2).then((void v) {
-//                             check(u2, this.myMapController);
-//                           });
-//                         });
-//                       },
-//                       markers: Set.from(markersList),
-//                     ),
-//                   ),
-//                 ],
-//               );
-//             } else if (state is ErrorLocationsState) {
-//               return Center(
-//                 child: Text(state.errorMessage),
-//               );
-//             }
-//           },
-//         ));
-//   }
-// }
+  LatLngBounds getLatLngBoundsForMarkers(List<Marker> markers) {
+    var northEast =
+        new LatLng(markers[0].position.latitude, markers[0].position.longitude);
+    var southWest =
+        new LatLng(markers[0].position.latitude, markers[0].position.longitude);
 
-// /*newLatLngBounds */
+    markers.forEach((marker) {
+      if (marker.position.latitude > northEast.latitude) {
+        northEast = LatLng(marker.position.latitude, northEast.longitude);
+      }
+      if (marker.position.longitude > northEast.longitude) {
+        northEast = LatLng(northEast.latitude, marker.position.longitude);
+      }
+
+      if (marker.position.latitude < southWest.latitude) {
+        southWest = LatLng(marker.position.latitude, southWest.longitude);
+      }
+      if (marker.position.longitude < southWest.longitude) {
+        southWest = LatLng(southWest.latitude, marker.position.longitude);
+      }
+    });
+
+    return LatLngBounds(northeast: northEast, southwest: southWest);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+ 
+  }
+
+  void check(CameraUpdate u, GoogleMapController c) async {
+    c.animateCamera(u);
+    myMapController.animateCamera(u);
+    LatLngBounds l1 = await c.getVisibleRegion();
+    LatLngBounds l2 = await c.getVisibleRegion();
+    print(l1.toString());
+    print(l2.toString());
+    if (l1.southwest.latitude == -90 || l2.southwest.latitude == -90)
+      check(u, c);
+  }
+
+  Widget _scrollingList() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+      child: (this.loading)
+          ? Container(
+              margin: const EdgeInsets.only(top: 36.0),
+              color: Colors.white,
+              child: ListView.builder(
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text("dddex"),
+                        subtitle: Text("Tetst"),
+                        onTap: () async {
+                          // var locationURL =
+                          //     "http://maps.google.com/maps?q=loc:${branchList[index].latitude},${branchList[index].longitude}";
+                          // if (await canLaunch(locationURL)) {
+                          //   await launch(locationURL);
+                          // }
+                        },
+                        trailing: Image.asset(
+                          "resources/icons/ic_arrow_right.png",
+                          color: Colors.black87,
+                          height: 18.0,
+                        ),
+                      ),
+                      Divider(
+                        color: Colors.black,
+                      )
+                    ],
+                  );
+                },
+              ))
+          : Center(
+              child: Text(
+                "error can't loading Branches",
+                style: TextStyle(
+                    fontSize:20.0 ,
+                    color: Colors.black,
+                    fontFamily: "avenir_book_01"),
+                textAlign: TextAlign.center,
+              ),
+            ),
+    );
+  }
+
+  PanelController _pc = new PanelController();
+
+  @override
+  Widget build(BuildContext context) {
+    BorderRadiusGeometry radius = BorderRadius.only(
+      topLeft: Radius.circular(24.0),
+      topRight: Radius.circular(24.0),
+    );
+    return  Scaffold(
+            appBar: AppBar(
+              actions: <Widget>[
+                (this.loading)
+                    ? IconButton(
+                        padding: EdgeInsets.all(13),
+                        icon: RotatedBox(
+                            quarterTurns: 0,
+                            child: new Image.asset(
+                                'resources/images/ic_show_map_list.png',
+                                color: Colors.black)),
+                        color: Colors.black,
+                        onPressed: () {
+                          _pc.isPanelOpen() ? _pc.close() : _pc.open();
+                        },
+                      )
+                    : Container(),
+              ],
+              title: Text(
+                "Locations",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                    fontFamily: "avenir_book_01"),
+                textAlign: TextAlign.center,
+              ),
+              centerTitle: true,
+              leading: new IconButton(
+                padding: EdgeInsets.all(13.5),
+                icon: RotatedBox(
+                    quarterTurns: 2,
+                    child: new Image.asset('resources/icons/ic_arrow_right.png',
+                        color: Colors.black)),
+                color: Colors.black,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+            body: Material(
+              child: SlidingUpPanel(
+                  backdropEnabled: true,
+                  borderRadius: radius,
+                  isDraggable: true,
+                  controller: _pc,
+                  maxHeight:  MediaQuery.of(context).size.height * 0.50,
+                  minHeight: 50.0,
+                  panel: _scrollingList(),
+                  collapsed: Container(
+                    color: Colors.orangeAccent,
+                    child: Center(
+                      child: Text(
+                        "All Locations",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  body: Center(),
+            )) );
+  }
+}

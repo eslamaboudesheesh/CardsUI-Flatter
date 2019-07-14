@@ -12,4 +12,8 @@ class MyNavigator {
   static void goToAuthFaild(BuildContext context) {
     Navigator.pushNamed(context, "/faild");
   }
+
+   static void goToLocation(BuildContext context) {
+    Navigator.pushNamed(context, "/location");
+  }
 }
